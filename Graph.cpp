@@ -97,24 +97,25 @@ class Graph{
 		startNode->distance=0;
 		Node[i].colour = 1;
 		DFSHelper(startNode, 0);
-		for(int i = 0; i< Nodes.size(); i++){
+		/*for(int i = 0; i< Nodes.size(); i++){
 			if(Nodes[i].colour = 0){
 				Nodes[i].colour = 1;
 				Nodes[i].distance = 0; //temp while time started and finished not implemented
 				DFSHelper(&(Nodes[i]), 0);
 			}
-		}
+		}*/
 	}
 };
 
-int main(){
+int main(){ //testbed for graph functions
 	Graph defaultGraph;
-	for(int i = 0; i<10; i++){
+	for(int i = 0; i<10; i++){ //initialize graph
 		defaultGraph.addNode(Node());
 		if(i>1){
 			defaultGraph.getNode(i)->addEdge(i+1,defaultGraph.getNode(i), defaultGraph.getNode(i-1));
 		}
 	}
+	defaultGraph.DFS(defaultGraph.Nodes[1]);
 	cout << "job done" << endl;
 	return 0;
 	
