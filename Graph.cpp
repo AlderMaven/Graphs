@@ -61,7 +61,16 @@ class Node{
 class Graph{
 	vector<Node> Nodes;
 	
-	void DFSHelper(Node* startNode){
+	void DFSHelper(Node* startNode, int startDistance){
+		for(int i = 0; i < startNode->outgoingEdges.size(); i++){
+			if(startNode->outgoingEdges[i]->end->colour==0){
+				startNode->outgoingEdges[i]->end->colour = 1;
+				startNode->outgoingEdges[i]->end->parent = startNode;
+				startNode->outgoingEdges[i]->end->distance = startDistance+1;
+				DFSHelper(startNode->outgoingEdges[i]->end);
+			}
+		}
+		startNode->colour=2;
 		
 	}
 	
@@ -79,7 +88,22 @@ class Graph{
 	
 	
 	void DFS(Node* startNode){
-		
+		for(int i = 0; i <Nodes.size(); i++){
+			Nodes[i].distance = 2^31-1;
+			Node[i].colour = 0;
+			Node[i].parent = NULL;
+		}
+		bool finishFlag = false;
+		startNode->distance=0;
+		Node[i].colour = 1;
+		DFSHelper(startNode, 0);
+		for(int i = 0; i< Nodes.size(); i++){
+			if(Nodes[i].colour = 0){
+				Nodes[i].colour = 1;
+				Nodes[i].distance = 0; //temp while time started and finished not implemented
+				DFSHelper(&(Nodes[i]), 0);
+			}
+		}
 	}
 };
 
