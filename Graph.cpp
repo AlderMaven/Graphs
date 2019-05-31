@@ -22,9 +22,9 @@ class Edge{
 	
 	public:
 	Edge(int newWeight, Node* newStart, Node* newEnd){
-		weight = newWeight;
-		start = newStart;
-		end = newEnd;
+		this->weight = newWeight;
+		this->start = newStart;
+		this->end = newEnd;
 	}
 	Node* getEnd(){
 		return this->end;
@@ -50,6 +50,7 @@ class Node{
 		int colour = 0;
 	}
 	Node(int newDistance, Node* newParent, int newColour){
+		
 		distance = newDistance;
 		parent = newParent;
 		colour = newColour;
@@ -105,7 +106,8 @@ class Graph{
 	
 	//Called by both the DFS functions for recursive traversal and flagging
 	int DFSHelper(Node* startNode, int startDistance, int* currentTime){
-		
+		cout <<"does it run" << endl;
+		cout << startNode->getEdge(0).getEnd()->getColour() << endl;
 		for(int i = 0; i < startNode->getVector().size(); i++){
 			if(startNode->getEdge(i).getEnd()->getColour()==0){
 				cout << "job not done" << endl;
@@ -152,9 +154,10 @@ class Graph{
 		}
 		
 		//initialize graph
-		for(int i = 0; i <Nodes.size(); i++){
-			Nodes[i].setDistance(2^31-1);
+		for(int i = 0; i<Nodes.size(); i++){
+			Nodes[i].setDistance(2^31-2);
 			Nodes[i].setColour(0);
+			
 			Nodes[i].setParent(NULL);
 		}
 		//start timer
@@ -177,7 +180,7 @@ class Graph{
 		}
 		//initialize graph for dfs
 		for(int i = 0; i <Nodes.size(); i++){
-			Nodes[i].setDistance(2^31-1);
+			Nodes[i].setDistance(2^31-2);
 			Nodes[i].setColour(0);
 			Nodes[i].setParent(NULL);
 		}
@@ -195,7 +198,12 @@ class Graph{
 		*currentFinish = DFSHelper(startNode, 0, currentFinish);
 		
 		//Checks all other untouched nodes in positional order from Graph.Nodes
-		for(int i = 0; i< Nodes.size(); i++){
+		for(int i = 0; i<Nodes.size(); i++){
+			
+		
+				cout << Nodes[i].getColour() << endl;
+				
+		
 			if(Nodes[i].getColour() == 0){
 				Nodes[i].setColour(1);
 				Nodes[i].setParent(NULL);
@@ -208,15 +216,17 @@ class Graph{
 
 int main(){ //testbed for graph functions
 	Graph defaultGraph;
-	
-	for(int i = 0; i<10; i++){ //initialize graph
-		defaultGraph.addNode(Node());
-		if(i>1){
+	int temp = 0;
+	for(int i = 0; i<20; i++){ //initialize graph
+		Node* tempNode = new Node(0, NULL, temp);
+		defaultGraph.addNode(*tempNode);
+		if(i>0){
 			defaultGraph.getNode(i)->addEdge(i+1,defaultGraph.getNode(i), defaultGraph.getNode(i-1));
 		}
 	}
 	
-	defaultGraph.DFS(defaultGraph.getNode(1));
+	defaultGraph.DFS(defaultGraph.getNode(13));
+	//defaultGraph.allDFS(defaultGraph.getNode(2));
 	cout << "job done" << endl;
 	return 0;
 	
