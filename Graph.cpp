@@ -145,7 +145,7 @@ class Graph{
 					cout << "edge access is not it" << endl;
 					//Set discovery time of node
 					startNode->getEdge(i).getEnd()->setDiscovery(*currentTime);
-					*currentTime++; //update timer
+					*currentTime = *currentTime + 1; //update timer
 				
 					cout << "recursive entry is in" << endl;
 					temp = DFSHelper(startNode->getEdge(i).getEnd(), startDistance+1, currentTime);
@@ -164,7 +164,7 @@ class Graph{
 				cout << "past does it break" << endl; */
 			}
 		}
-		cout << "compare count  " << *currentTime <<endl;
+		cout << "compare count  " << (*currentTime) <<endl;
 		startNode->setColour(2); //Flag as completely explored
 		startNode->setFinish(*currentTime); //Set finish time
 		cout << "does helper exit" << endl;
@@ -200,9 +200,8 @@ class Graph{
 		
 		
 		//start timer
-		int temp;
+		int temp = 1;
 		int* time = &temp;
-		*time = 1;
 		
 		//initialize startNode
 		startNode->setDistance(0);
@@ -273,8 +272,10 @@ int main(){ //testbed for graph functions
 	}
 	
 	
-	//defaultGraph.DFS(defaultGraph.getNode(0));
-	defaultGraph.allDFS(defaultGraph.getNode(5));
+	defaultGraph.DFS(defaultGraph.getNode(0));
+	//defaultGraph.allDFS(defaultGraph.getNode(0));
+	
+	
 	for(int i = 0; i<6; i++){ //initialize graph
 		cout << "Node " << i << " has colour " << defaultGraph.getNode(i)->getColour() << endl;
 	}
