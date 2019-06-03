@@ -99,7 +99,7 @@ class Node{
 	}
 	vector<Edge>* getVector(){
 		if(this->outgoingEdges.empty()){
-			cout << "it was null" << endl;
+			//cout << "it was null" << endl;
 			return NULL;
 		}
 		
@@ -121,7 +121,7 @@ class Graph{
 	
 	//Called by both the DFS functions for recursive traversal and flagging
 	int DFSHelper(Node* startNode, int startDistance, int* currentTime){
-		cout << "enter helper" << endl;
+		//cout << "enter helper" << endl;
 		if(startNode==NULL){
 			return *currentTime;
 		}
@@ -131,10 +131,10 @@ class Graph{
 			startNode->setFinish(*currentTime); //Set finish time
 			return startNode->getFinish()+1;
 		}
-		cout <<"does it run" << endl;
+		//cout <<"does it run" << endl;
 		int temp;
 		for(int i = 0; i < startNode->getVector()->size(); i++){
-			cout << "how many loops  " << i << endl;
+			//cout << "how many loops  " << i << endl;
 			if(startNode->getEdge(i).getEnd() != NULL){
 				
 				if(startNode->getEdge(i).getEnd()->getColour()==0){
@@ -142,14 +142,14 @@ class Graph{
 					startNode->getEdge(i).getEnd()->setColour(1); //Flag as visited
 					startNode->getEdge(i).getEnd()->setParent(startNode); //Set parent to calling node
 					startNode->getEdge(i).getEnd()->setDistance(startDistance+1); //set distance
-					cout << "edge access is not it" << endl;
+					//cout << "edge access is not it" << endl;
 					//Set discovery time of node
 					startNode->getEdge(i).getEnd()->setDiscovery(*currentTime);
 					*currentTime = *currentTime + 1; //update timer
 				
-					cout << "recursive entry is in" << endl;
+					//cout << "recursive entry is in" << endl;
 					temp = DFSHelper(startNode->getEdge(i).getEnd(), startDistance+1, currentTime);
-					cout << "exit helper" << endl;
+					//cout << "exit helper" << endl;
 					*currentTime = temp;
 			
 				}
@@ -164,10 +164,10 @@ class Graph{
 				cout << "past does it break" << endl; */
 			}
 		}
-		cout << "compare count  " << (*currentTime) <<endl;
+		//cout << "compare count  " << (*currentTime) <<endl;
 		startNode->setColour(2); //Flag as completely explored
 		startNode->setFinish(*currentTime); //Set finish time
-		cout << "does helper exit" << endl;
+		//cout << "does helper exit" << endl;
 		return *currentTime+1;
 	}
 	
@@ -209,7 +209,7 @@ class Graph{
 		startNode->setDiscovery(0);
 	
 		DFSHelper(startNode, 0, time);
-		cout << "exit helper" << endl;
+		//cout << "exit helper" << endl;
 	}
 	//DFS that goes to all nodes
 	void allDFS(Node* startNode){
@@ -239,12 +239,12 @@ class Graph{
 		//Checks all other untouched nodes in positional order from Graph.Nodes
 		for(int i = 0; i<Nodes.size(); i++){
 			
-				cout << "Current Node: " << i << endl;
-				cout << "Colour of Node: " << Nodes[i].getColour() << endl;
+				//cout << "Current Node: " << i << endl;
+				//cout << "Colour of Node: " << Nodes[i].getColour() << endl;
 				
 		
 			if(Nodes[i].getColour() == 0){
-				cout<<"calling dfshelper from loop" << endl;
+				//cout<<"calling dfshelper from loop" << endl;
 				Nodes[i].setColour(1);
 				Nodes[i].setParent(NULL);
 				Nodes[i].setDistance(0); //temp while time started and finished not implemented
