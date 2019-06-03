@@ -273,7 +273,7 @@ int main(){ //testbed for graph functions
 	
 	
 	defaultGraph.DFS(defaultGraph.getNode(0));
-	//defaultGraph.allDFS(defaultGraph.getNode(0));
+	defaultGraph.allDFS(defaultGraph.getNode(3));
 	
 	
 	for(int i = 0; i<6; i++){ //initialize graph
