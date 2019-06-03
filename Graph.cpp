@@ -255,25 +255,26 @@ class Graph{
 			
 		}
 	}
+	Graph(vector<Node> inputSet){
+		this->Nodes = inputSet;
+	}
 };
 
 int main(){ //testbed for graph functions
-	Graph defaultGraph;
+	
 	int temp = 0;
-	Node* tempNode = NULL;
-	Node* previousNode;
+	vector<Node> inputSet;
 	for(int i = 0; i<6; i++){ //initialize graph
-		
-		tempNode = new Node(0, NULL, temp);
-		defaultGraph.addNode(*tempNode);
-		if(i>0){
-			previousNode =defaultGraph.getNode(i-1);
-			defaultGraph.getNode(i)->addEdge(i+1,tempNode, previousNode);
-		}
+		inputSet.push_back(Node(temp, NULL, temp));
+	}
+	Graph defaultGraph = Graph(inputSet);
+	for(int i = 0; i<inputSet.size()-1; i++){
+		defaultGraph.getNode(i)->addEdge(i+1, defaultGraph.getNode(i), defaultGraph.getNode(i+1));
 	}
 	
-	defaultGraph.DFS(defaultGraph.getNode(5));
-	//defaultGraph.allDFS(defaultGraph.getNode(5));
+	
+	//defaultGraph.DFS(defaultGraph.getNode(0));
+	defaultGraph.allDFS(defaultGraph.getNode(5));
 	for(int i = 0; i<6; i++){ //initialize graph
 		cout << "Node " << i << " has colour " << defaultGraph.getNode(i)->getColour() << endl;
 	}
