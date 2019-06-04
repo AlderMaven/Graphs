@@ -111,6 +111,10 @@ class Node{
 	int getDistance(){
 		return this->distance;
 	}
+	~Node(){
+		outgoingEdges.clear();
+		//Not deleting parent since that may still be a member of the graph
+	}
 };
 
 
@@ -256,6 +260,11 @@ class Graph{
 	}
 	Graph(vector<Node> inputSet){
 		this->Nodes = inputSet;
+	}
+	~Graph(){
+		Nodes.clear();
+		cout << "Successfully deleted Graph";
+		return;
 	}
 };
 
