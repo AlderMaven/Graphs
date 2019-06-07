@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
+#include <queue>
 
 using namespace std;
 
@@ -111,6 +112,9 @@ class Node{
 	int getDistance(){
 		return this->distance;
 	}
+	Node* getParent(){
+		return this->parent;
+	}
 	~Node(){
 		outgoingEdges.clear();
 		//Not deleting parent since that may still be a member of the graph
@@ -158,15 +162,7 @@ class Graph{
 			
 				}
 			}
-			else{ //For minimal path back to startNode
-				/* cout << "does it break in here"<< endl;
-				if(startNode->getEdge(i).getEnd()->getDistance()>startDistance+1){
-					//Update distance and parent
-					//startNode->getEdge(i).getEnd()->setDistance(startDistance+1);
-					//startNode->getEdge(i).getEnd()->setParent(startNode);
-				}
-				cout << "past does it break" << endl; */
-			}
+			
 		}
 		//cout << "compare count  " << (*currentTime) <<endl;
 		startNode->setColour(2); //Flag as completely explored
@@ -258,6 +254,54 @@ class Graph{
 			
 		}
 	}
+	
+	void BFS(Node* startNode){
+		if(startNode==NULL){
+			return;
+		}
+		//initialize graph for dfs
+		for(int i = 0; i <Nodes.size(); i++){
+			Nodes[i].setDistance(2^31-2);
+			Nodes[i].setColour(0);
+			Nodes[i].setParent(NULL);
+		}
+		//initialize start
+		queue<Node*> toResolve;
+		toResolve.push(startNode);
+		startNode->setColour(1);
+		Node* workingNode;
+		
+		while(!(toResolve.empty())){
+			
+			workingNode = toResolve.front();
+			if(workingNode->getVector()==NULL){
+				workingNode->setColour(2);
+				toResolve.pop();
+				return;
+			}
+			if(workingNode->getParent()==NULL){
+				workingNode->setDistance(0);
+			}
+			else{
+				workingNode->setDistance(workingNode->getParent()->getDistance()+1);
+			}
+			cout<<"enter for"<<endl;
+			
+			for(int i = 0; i<workingNode->getVector()->size(); i++){ //break occuring here due to access error
+				cout<<"for entered"<<endl;
+				if(workingNode->getEdge(i).getEnd()->getColour()==0){
+					workingNode->getEdge(i).getEnd()->setColour(1);
+					workingNode->getEdge(i).getEnd()->setParent(workingNode);
+					toResolve.push(workingNode->getEdge(i).getEnd()); //this is pushing on an extra node not in the graph
+				}
+			}	
+			workingNode->setColour(2);
+			toResolve.pop();
+		}
+	}
+	
+	
+	
 	Graph(vector<Node> inputSet){
 		this->Nodes = inputSet;
 	}
@@ -281,8 +325,9 @@ int main(){ //testbed for graph functions
 	}
 	
 	
-	defaultGraph.DFS(defaultGraph.getNode(0));
-	defaultGraph.allDFS(defaultGraph.getNode(3));
+	//defaultGraph.DFS(defaultGraph.getNode(0));
+	//defaultGraph.allDFS(defaultGraph.getNode(3));
+	defaultGraph.BFS(defaultGraph.getNode(0));
 	
 	
 	for(int i = 0; i<6; i++){ //initialize graph
