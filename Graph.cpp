@@ -271,32 +271,32 @@ class Graph{
 		startNode->setColour(1);
 		Node* workingNode;
 		
-		while(!(toResolve.empty())){
+		while(!(toResolve.empty())){ //When empty then all reachable nodes have been visited and resolved
 			
-			workingNode = toResolve.front();
-			if(workingNode->getVector()==NULL){
+			workingNode = toResolve.front(); 
+			if(workingNode->getVector()==NULL){ //Prevents overstepping of graph
 				workingNode->setColour(2);
 				toResolve.pop();
 				return;
 			}
-			if(workingNode->getParent()==NULL){
+			if(workingNode->getParent()==NULL){ //for source node
 				workingNode->setDistance(0);
 			}
-			else{
+			else{ //For non-source nodes, makes distance = parent distance + 1
 				workingNode->setDistance(workingNode->getParent()->getDistance()+1);
 			}
-			cout<<"enter for"<<endl;
 			
-			for(int i = 0; i<workingNode->getVector()->size(); i++){ //break occuring here due to access error
-				cout<<"for entered"<<endl;
-				if(workingNode->getEdge(i).getEnd()->getColour()==0){
-					workingNode->getEdge(i).getEnd()->setColour(1);
-					workingNode->getEdge(i).getEnd()->setParent(workingNode);
-					toResolve.push(workingNode->getEdge(i).getEnd()); //this is pushing on an extra node not in the graph
+			
+			for(int i = 0; i<workingNode->getVector()->size(); i++){ 
+				
+				if(workingNode->getEdge(i).getEnd()->getColour()==0){ //Only for unvisited nodes
+					workingNode->getEdge(i).getEnd()->setColour(1); //set as visited
+					workingNode->getEdge(i).getEnd()->setParent(workingNode); //set parent to workingNode
+					toResolve.push(workingNode->getEdge(i).getEnd());  //push node onto queue
 				}
 			}	
-			workingNode->setColour(2);
-			toResolve.pop();
+			workingNode->setColour(2); //Set as resolved
+			toResolve.pop(); //pop off from queue
 		}
 	}
 	
